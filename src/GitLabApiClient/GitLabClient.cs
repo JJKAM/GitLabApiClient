@@ -34,6 +34,7 @@ namespace GitLabApiClient
                 authenticationToken);
 
             var projectQueryBuilder = new ProjectsQueryBuilder();
+            var projectBranchesQueryBuilder = new ProjectBranchesQueryBuilder();
             var projectIssuesQueryBuilder = new ProjectIssuesQueryBuilder();
             var projectIssueNotesQueryBuilder = new ProjectIssueNotesQueryBuilder();
             var issuesQueryBuilder = new IssuesQueryBuilder();
@@ -43,12 +44,18 @@ namespace GitLabApiClient
             var groupsQueryBuilder = new GroupsQueryBuilder();
             var projectsGroupsQueryBuilder = new ProjectsGroupQueryBuilder();
 
+            Branches = new BranchesClient(_httpFacade, projectBranchesQueryBuilder);
             Issues = new IssuesClient(_httpFacade, issuesQueryBuilder, projectIssuesQueryBuilder, projectIssueNotesQueryBuilder);
             MergeRequests = new MergeRequestsClient(_httpFacade, mergeRequestsQueryBuilder, projectMergeRequestsQueryBuilder);
             Projects = new ProjectsClient(_httpFacade, projectQueryBuilder, projectMilestonesQueryBuilder);
             Users = new UsersClient(_httpFacade);
             Groups = new GroupsClient(_httpFacade, groupsQueryBuilder, projectsGroupsQueryBuilder, projectMilestonesQueryBuilder);
         }
+
+        /// <summary>
+        /// Access GitLab's branches API.
+        /// </summary>
+        public BranchesClient Branches { get; }
 
         /// <summary>
         /// Access GitLab's issues API.
